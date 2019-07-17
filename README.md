@@ -1,9 +1,7 @@
 # 스프링 5.0 마이크로서비스 2/e
 
-![book](http://www.acornpub.co.kr/tb/detail/book/qb/wz/1517215720iC4a9nrz.jpg)
-
- ------
-
+## 책의 구성
+-----
 ```
 1장. ‘쉽게 알아보는 마이크로서비스’
 2장. ‘마이크로서비스 관련 아키텍처 스타일 및 사례’
@@ -18,6 +16,7 @@
 11장. ‘마이크로서비스 개발 라이프사이클’
 ```
 
+![book](http://www.acornpub.co.kr/tb/detail/book/qb/wz/1517215720iC4a9nrz.jpg)
 
 ## 예제 코드
 * https://github.com/PacktPublishing/Spring-5.0-Microservices-Second-Edition
