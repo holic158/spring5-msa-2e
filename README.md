@@ -1,2 +1,7 @@
-# spring5-msa-2e
-스프링 MSA 책 정리 및 이슈 정리
+# 스프링 5.0 마이크로서비스 2/e
+
+![book](http://www.acornpub.co.kr/tb/detail/book/qb/wz/1517215720iC4a9nrz.jpg)
+
+예제 코드
+* https://github.com/PacktPublishing/Spring-5.0-Microservices-Second-Edition
+* http://www.acornpub.co.kr/download/spring5-microservices-2e
