@@ -46,37 +46,33 @@ SOA는 "서비스 제공자와 사용자가 합의된 계약(또는 인터페이
 
 ## 12 요소 어플리케이션(The twelve-factor methodology)
 The Twelve-Factor App methodology is a methodology for building SaaS applications. These best practices are designed to enable applications to be built with portability and resilience when deployed to the web
-
-1. 단일 코드 베이스 원칙(Codebase)
+> 1. 단일 코드 베이스 원칙(Codebase)<br/>
 각 어플리케이션이 하나의 코드 베이스만을 가져야 함. dev, test, prod 동일한 하나의 코드 베이스를 기반으로 구성. git, svn 같은 형상관리 도구를 통해 관리
-
-2. 의존성 꾸러미(Dependencies)
+> 2. 의존성 꾸러미(Dependencies)<br/>
 모든 어플리케이션은 필요한 모든 의존성을 어플레키션과 함께 하나의 꾸러미로 담음. Maven-pom.xml, Gradle-.gradle을 통해 의존성 관리
 All dependencies should be declared, with no implicit reliance on system tools or libraries.
-
-3. 환경설정 외부화(Config)
+> 3. 환경설정 외부화(Config)<br/>
 모든 환경 설정 파라미터를 코드와 분리해서 외부화.
-4. 후방 지원 서비스 접근성(Backing Service)
+> 4. 후방 지원 서비스 접근성(Backing Service)<br/>
 모든 후방 지원 서비스는 URL을 통해 접근 가능해야 함. 모든 서비스는 실행주기 동안 외부의 자원과 의사소통해야함
-5. 빌드, 출시, 운영의 격리(Build, release, run)
+> 5. 빌드, 출시, 운영의 격리(Build, release, run)<br/>
 빌드, 출시, 운영의 격리 원칙에 따라 단계를 뚜렷하게 격리해야함.
 빌드: 모든 자원 컴파일 -> 바이너리 만듦
 출시: 바이너리 + 환경설정 파라미터와 혼합
 운영: 실행 환경에서 어플리케이션 운영
 빌드, 출시, 운영의 일방향 파이프라인을 통과하여 서비스 변경을 적용
-6. 무상태, 비공유 프로세스(Processes)
+> 6. 무상태, 비공유 프로세스(Processes)<br/>
 프로세스들이 상태가 없어야 하고, 아무것도 공유하지 않는 것이 좋음. 상태를 저장해야 할 경우 DB나 REDIS를 사용하여 처리
-7. 서비스를 포트에 바인딩하여 노출(Port Binding)
+> 7. 서비스를 포트에 바인딩하여 노출(Port Binding)
 12 요소 어플리케이션은 Self-Contained 또는 StandAlone이어야 함. 외부 웹서버에 의존하지 않고 HTTP 리스너, 서비스리스너를 애플리케이션 자체에 내장.
-8. 확장을 위한 동시성(Concurrency)
+> 8. 확장을 위한 동시성(Concurrency)<br/>
 MSA는 서비스가 서버의 자원을 늘리는 수직적 확장(Scale up)이 아닌 서버의 수를 늘리는 수평적 확장(Scale out) 박식으로 확장된다. 복제를 통해 프로세스가 확장될 수 있게 설계해야 한다.
-9. 폐기 영향 최소화(Disposability)
+> 9. 폐기 영향 최소화(Disposability)<br/>
 서버의 startup과 shutdown에 필요한 시간을 최소화하고, 서버가 종료될 때 종료에 필요한 작업이 모두 수행되어야 한다. 완전 자동화를 위해 최소한의 시동/종료 시간을 갖도록 애플리케이션의 크기를 가능한 작게 유지하는 것이 극단적으로 아주 중요하다.
-10. 개발과 운영의 짝맞춤(Dev/Prod parity)
+> 10. 개발과 운영의 짝맞춤(Dev/Prod parity)<br/>
 개발 환경과 운영환경을 간으한 동일하게 유지. 인프라스트럭처 구성에 더 많은 비용이 들지만, 운영 환경 장애나 장애 해결에 도움이 됨.
-11. 로그 외부화(Logs)
+> 11. 로그 외부화(Logs)<br/>
 로컬 I/O를 피해 병목현상이 발생하지 않도록 중앙 집중식 로깅 프레임워크를 사용하는 것을 추천. MSA에서는 서비스를 쪼개므로, 로그가 분산될 가능성이 있음. 로그를 중앙 집중화 하는 것이 매우 중요.
-12. 관리자 프로세스 패키징(Admin Processes)
-어플리케이션 본연의 서비스와 별개로 관리자용 태스크가 필요하다. 기능 점검을 위한 일회성 스크립트 실행, 어플리케이션 모델 확인 등등.
-Any needed admin tasks should be kept in source control and packaged with the application.
+> 12. 관리자 프로세스 패키징(Admin Processes)<br/>
+어플리케이션 본연의 서비스와 별개로 관리자용 태스크가 필요하다. 기능 점검을 위한 일회성 스크립트 실행, 어플리케이션 모델 확인 등등. Any needed admin tasks should be kept in source control and packaged with the application.
 
