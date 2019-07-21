@@ -11,7 +11,7 @@
 - 마이크로 서비스 프레임워크
 
 ## 서비스지향 아키텍처(Service Oriented Architecture)
-![soa_img](/img/c02-soa.jpg)
+![soa_archi](/img/c02-soa.jpg)
 
 어플리케이션들의 기능을 비즈니스적인 의미를 가지는 기능 단위로 묶고, 표준화된 호출 인터페이스를 통해서 서비스라는 소프트웨어 컴포넌트 단위로 재 조합한후, 이 `서비스들을 서로 조합(Orchestration)`하여 업무 기능을 구현한 애플리케이션을 만들어내는 소프트웨어 아키텍쳐
 SOA는 "서비스 제공자와 사용자가 합의된 계약(또는 인터페이스)을 통하여 느슨하게 연계(Loosely coupled)된 소통을 지원하는 아키텍처를 만들기 위해 필요한 원칙들의 모음"으로 정의된다.
@@ -19,11 +19,11 @@ SOA는 "서비스 제공자와 사용자가 합의된 계약(또는 인터페이
 즉, SOA는 애플리케이션에서 비즈니스 로직을 분리하여 하나 또는 여러 개의 소프트웨어 모듈에 포함시킨 후 잘 정의된 공개 인터페이스를 통하여 프로그램적으로 접근할 수 있게 노출시키는 방식의 애플리케이션 소프트웨어 토폴로지(Topology)이다.
 
 ### SILO
-![soa_img](/img/c02-soa-silo.png)
+![silo](/img/c02-soa-silo.png)
 > 기업 내의 각 부서들이 서로 단절된 상태로 자신의 부서에 필요한 독자적인 어플리케이션을 개발한 것
 > 다른 부서의 애플리케이션에서도 유사한 데이터 구조와 기능이 있음에도 불구하고 정보 관리의 유사성은 배제된 채로 각 부서는 서로 다른 독자적인 어플리케이션을 개발
 ## SILO TO SOA
-![soa_img](/img/c02-soa-silo-to-soa.png)
+![silotosoa](/img/c02-soa-silo-to-soa.png)
 > SOA의 목표는 조직 내 분산되어 있는 비즈니스 서비스를 해체하여, 여러 시스템에서 공유할 수 있는 공유 비즈니스 서비스 (shared business service)로 통합하는 것
 
 
@@ -43,3 +43,40 @@ SOA는 "서비스 제공자와 사용자가 합의된 계약(또는 인터페이
 
 ![soa2msa2](/img/co2-soa2msa2.jpg)
 일체형 시스템에서 일체형 어플리케이션을 더 작은 단위로 변형시킬 때 SOA가 적용된다. 어플리케이션을 작은 크기의 물리적으로 배포 가능한 하위 시스템으로 분리하고, 웹 아카이브로 만들어 웹서버에 배포하거나 JAR로 만들어 자체 컨테이너에 배포할 수 있다. 서비스 간의 데이터 교환을 위해 웹 서비스나 경량 프로토콜(HTTP, JMS...)이 사용된다. 이 방식에서 SOA와 MSA는 알고보면 옛날 것과 똑같다고 생각한다.
+
+## 12 요소 어플리케이션(The twelve-factor methodology)
+The Twelve-Factor App methodology is a methodology for building SaaS applications. These best practices are designed to enable applications to be built with portability and resilience when deployed to the web
+
+1. 단일 코드 베이스 원칙(Codebase)
+각 어플리케이션이 하나의 코드 베이스만을 가져야 함. dev, test, prod 동일한 하나의 코드 베이스를 기반으로 구성. git, svn 같은 형상관리 도구를 통해 관리
+
+2. 의존성 꾸러미(Dependencies)
+모든 어플리케이션은 필요한 모든 의존성을 어플레키션과 함께 하나의 꾸러미로 담음. Maven-pom.xml, Gradle-.gradle을 통해 의존성 관리
+All dependencies should be declared, with no implicit reliance on system tools or libraries.
+
+3. 환경설정 외부화(Config)
+모든 환경 설정 파라미터를 코드와 분리해서 외부화.
+4. 후방 지원 서비스 접근성(Backing Service)
+모든 후방 지원 서비스는 URL을 통해 접근 가능해야 함. 모든 서비스는 실행주기 동안 외부의 자원과 의사소통해야함
+5. 빌드, 출시, 운영의 격리(Build, release, run)
+빌드, 출시, 운영의 격리 원칙에 따라 단계를 뚜렷하게 격리해야함.
+빌드: 모든 자원 컴파일 -> 바이너리 만듦
+출시: 바이너리 + 환경설정 파라미터와 혼합
+운영: 실행 환경에서 어플리케이션 운영
+빌드, 출시, 운영의 일방향 파이프라인을 통과하여 서비스 변경을 적용
+6. 무상태, 비공유 프로세스(Processes)
+프로세스들이 상태가 없어야 하고, 아무것도 공유하지 않는 것이 좋음. 상태를 저장해야 할 경우 DB나 REDIS를 사용하여 처리
+7. 서비스를 포트에 바인딩하여 노출(Port Binding)
+12 요소 어플리케이션은 Self-Contained 또는 StandAlone이어야 함. 외부 웹서버에 의존하지 않고 HTTP 리스너, 서비스리스너를 애플리케이션 자체에 내장.
+8. 확장을 위한 동시성(Concurrency)
+MSA는 서비스가 서버의 자원을 늘리는 수직적 확장(Scale up)이 아닌 서버의 수를 늘리는 수평적 확장(Scale out) 박식으로 확장된다. 복제를 통해 프로세스가 확장될 수 있게 설계해야 한다.
+9. 폐기 영향 최소화(Disposability)
+서버의 startup과 shutdown에 필요한 시간을 최소화하고, 서버가 종료될 때 종료에 필요한 작업이 모두 수행되어야 한다. 완전 자동화를 위해 최소한의 시동/종료 시간을 갖도록 애플리케이션의 크기를 가능한 작게 유지하는 것이 극단적으로 아주 중요하다.
+10. 개발과 운영의 짝맞춤(Dev/Prod parity)
+개발 환경과 운영환경을 간으한 동일하게 유지. 인프라스트럭처 구성에 더 많은 비용이 들지만, 운영 환경 장애나 장애 해결에 도움이 됨.
+11. 로그 외부화(Logs)
+로컬 I/O를 피해 병목현상이 발생하지 않도록 중앙 집중식 로깅 프레임워크를 사용하는 것을 추천. MSA에서는 서비스를 쪼개므로, 로그가 분산될 가능성이 있음. 로그를 중앙 집중화 하는 것이 매우 중요.
+12. 관리자 프로세스 패키징(Admin Processes)
+어플리케이션 본연의 서비스와 별개로 관리자용 태스크가 필요하다. 기능 점검을 위한 일회성 스크립트 실행, 어플리케이션 모델 확인 등등.
+Any needed admin tasks should be kept in source control and packaged with the application.
+
